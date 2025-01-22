@@ -11,11 +11,13 @@ class Generator(nn.Module):
     def __init__(self):
         super(Generator, self).__init__()
         self.model = nn.Sequential(
-            nn.Linear(100, 256),
+            nn.Linear(128, 256),
             nn.ReLU(),
             nn.Linear(256, 512),
             nn.ReLU(),
-            nn.Linear(512, 784),
+            nn.Linear(512, 1024),
+            nn.ReLU(),
+            nn.Linear(1024, 784),
             nn.Tanh(),
         )
 
@@ -78,7 +80,7 @@ for epoch in range(epochs):
         loss_real = criterion(outputs, real_labels)
 
         # Crear ruido y generar imágenes falsas
-        noise = torch.randn(batch_size, 100)
+        noise = torch.randn(batch_size, 128)
         fake_images = G(noise)
 
         # Salidas para las imágenes falsas
